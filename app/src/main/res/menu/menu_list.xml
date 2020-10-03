@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group >
+        <item
+            android:id="@+id/nav_calc"
+            android:icon="@android:drawable/ic_dialog_dialer"
+            android:title="@string/nav_calc" />
+        <item
+            android:id="@+id/nav_converter"
+            android:icon="@android:drawable/stat_notify_sync"
+            android:title="@string/nav_conv" />
+    </group>
+    <item
+        android:id="@+id/nav_feedb"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/nav_feedback" />
+</menu>
