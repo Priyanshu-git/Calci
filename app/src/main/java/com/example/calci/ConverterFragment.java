@@ -18,7 +18,7 @@ public class ConverterFragment extends Fragment {
     View layout;
     Spinner spin;
     String profile;
-    EditText input,bin,dec,oct,hex;
+    EditText input, bin, dec, oct, hex;
     TextView wrong;
 
     @Override
@@ -29,15 +29,15 @@ public class ConverterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout= inflater.inflate(R.layout.fragment_converter, container, false);
-        spin=layout.findViewById(R.id.spinner);
+        layout = inflater.inflate(R.layout.fragment_converter, container, false);
+        spin = layout.findViewById(R.id.spinner);
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView spinnerText=(TextView)spin.getChildAt(0);
+                TextView spinnerText = (TextView) spin.getChildAt(0);
                 spinnerText.setTextColor(Color.WHITE);
-                TextView t=(TextView)view;
-                profile=t.getText().toString();
+                TextView t = (TextView) view;
+                profile = t.getText().toString();
             }
 
             @Override
@@ -46,45 +46,44 @@ public class ConverterFragment extends Fragment {
             }
         });
 
-        input=layout.findViewById(R.id.inputNum);
-        bin=layout.findViewById(R.id.bin);
-        oct=layout.findViewById(R.id.oct);
-        dec=layout.findViewById(R.id.dec);
-        hex=layout.findViewById(R.id.hex);
-        wrong=layout.findViewById(R.id.wrong);
+        input = layout.findViewById(R.id.inputNum);
+        bin = layout.findViewById(R.id.bin);
+        oct = layout.findViewById(R.id.oct);
+        dec = layout.findViewById(R.id.dec);
+        hex = layout.findViewById(R.id.hex);
+        wrong = layout.findViewById(R.id.wrong);
 
-        Button button=layout.findViewById(R.id.button);
+        Button button = layout.findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String s=input.getText().toString();
+                String s = input.getText().toString();
                 switch (profile) {
                     case "Binary":
                         if (binCheck(s)) {
-                            String d=bin2dec(s);
+                            String d = bin2dec(s);
                             bin.setText(s);
-                            oct.setText(dec2N(Long.parseLong(d),8));
+                            oct.setText(dec2N(Long.parseLong(d), 8));
                             dec.setText(d);
-                            hex.setText(dec2N(Long.parseLong(d),16));
+                            hex.setText(dec2N(Long.parseLong(d), 16));
                             input.setTextColor(Color.WHITE);
                             wrong.setVisibility(View.INVISIBLE);
-                        }
-                        else {
+                        } else {
                             input.setTextColor(Color.RED);
                             wrong.setVisibility(View.VISIBLE);
                         }
                         break;
                     case "Octal":
                         if (checkOctal(s)) {
-                            String d=String.valueOf(toDeci(s,8));
-                            bin.setText(dec2N(Long.parseLong(d),2));
+                            String d = String.valueOf(toDeci(s, 8));
+                            bin.setText(dec2N(Long.parseLong(d), 2));
                             oct.setText(s);
                             dec.setText(d);
-                            hex.setText(dec2N(Long.parseLong(d),16));
+                            hex.setText(dec2N(Long.parseLong(d), 16));
                             input.setTextColor(Color.WHITE);
                             wrong.setVisibility(View.INVISIBLE);
-                        }else {
+                        } else {
                             input.setTextColor(Color.RED);
                             wrong.setVisibility(View.VISIBLE);
                         }
@@ -97,13 +96,13 @@ public class ConverterFragment extends Fragment {
                             hex.setText(dec2N(Long.parseLong(s), 16));
                             input.setTextColor(Color.WHITE);
                             wrong.setVisibility(View.INVISIBLE);
-                        }else {
+                        } else {
                             input.setTextColor(Color.RED);
                             wrong.setVisibility(View.VISIBLE);
                         }
                         break;
                     case "Hexadecimal":
-                        s=s.toUpperCase();
+                        s = s.toUpperCase();
                         if (checkHexa(s)) {
                             String d = String.valueOf(toDeci(s, 16));
                             bin.setText(dec2N(Long.parseLong(d), 2));
@@ -113,7 +112,7 @@ public class ConverterFragment extends Fragment {
                             input.setTextColor(Color.WHITE);
                             wrong.setVisibility(View.INVISIBLE);
 
-                        }else {
+                        } else {
                             input.setTextColor(Color.RED);
                             wrong.setVisibility(View.VISIBLE);
                         }
@@ -124,24 +123,23 @@ public class ConverterFragment extends Fragment {
         return layout;
     }
 
-    private static String dec2N(Long s,int base) {
-        String res="";
-        while (s!=0)
-        {
-            res=newval((int)(s%base))+res;
-            s/=base;
+    private static String dec2N(long s, int base) {
+        StringBuilder res = new StringBuilder();
+        while (s != 0) {
+            res.insert(0, newval((int) (s % base)));
+            s /= base;
         }
-        return res;
+        return res.toString();
     }
 
     private static String newval(int l) {
-        if (l>=0 && l<=9)
+        if (l >= 0 && l <= 9)
             return String.valueOf(l);
-        else return String.valueOf((char)('A'+10-l));
+        else return String.valueOf((char) ('A' + l - 10));
     }
 
     static long toDeci(String str,
-                      int base) {
+                       int base) {
         int len = str.length();
         long power = 1;
         long num = 0;
